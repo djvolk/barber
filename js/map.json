@@ -1,0 +1,22 @@
+{
+    "places": [
+        {
+            "title": "Кинотеатр КАРО ФИЛЬМ в ТЦ Шоколад",
+            "description": "<div style=\"text-align:center; width: 250px;\">ул. Белинского, 124<br><a href=\"http://www.map.cek.ru/index.php?option=com_content&view=article&id=33&Itemid=145\" target=\"blank\">Информация о кинотеатре КАРО ФИЛЬМ в ТЦ Шоколад с афишой фильмов</a></div>",
+            "lat": 56.31927,
+            "lng": 44.026297
+        },
+        {
+            "title": "Кинотеатр Октябрь",
+            "description": "<div style=\"text-align:center\">ул. Большая Покровская, 51а<br><a href=\"http://www.map.cek.ru/index.php?option=com_content&view=article&id=27&Itemid=139\" target=\"blank\">Информация о кинотеатре Октябрь с афишой фильмов</a></div>",
+            "lat": 56.31721300000001,
+            "lng": 43.993976
+        },
+        {
+            "title": "Кинотеатр Синема Парк",
+            "description": "<div style=\"text-align:center\">ул. Родионова, 187<br><a href=\"http://www.map.cek.ru/index.php?option=com_content&view=article&id=24&Itemid=143\" target=\"blank\"><img src=\"http://www.map.cek.ru/images/stories/afisha/cinema/sinemapark.jpg\" width=\"100\" height=\"62\"></a></div>",
+            "lat": 56.308056,
+            "lng": 44.073827
+        }
+    ]
+}
