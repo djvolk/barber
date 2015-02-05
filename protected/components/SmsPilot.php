@@ -1,327 +1,338 @@
 <?php
+// v1.9.10
+if (!defined('SMSPILOT_API')) define('SMSPILOT_API', 'http://smspilot.ru/api.php');
+if (!defined('SMSPILOT_APIKEY')) define('SMSPILOT_APIKEY', 'T7YAOB7NPW71K74U835EFT61926BN1Z14Q9E011WF85WS995P39QMQZ760KE8V21');
+if (!defined('SMSPILOT_CHARSET')) define('SMSPILOT_CHARSET', 'UTF-8');
+if (!defined('SMSPILOT_FROM')) define('SMSPILOT_FROM', ''); // new in 1.8.1
 
+class SmsPilot {
+/* SMS Pilot API/PHP v1.8
+ * SEE: http://www.smspilot.ru/apikey.php
 
-class SmsPilot extends CApplicationComponent {
+ Example (send):
+    include('smspilot.php');
+	sms('79087964781','Hello');
 
-	public $api = 'http://smspilot.ru/api.php';
-	public $apikey = 'T7YAOB7NPW71K74U835EFT61926BN1Z14Q9E011WF85WS995P39QMQZ760KE8V21';
-	public $charset = 'UTF-8';
-//	public $use_ssl = false; //removed in 1.8.3, see $sms->api property
-	public $to;
-	public $text;
-	public $from = false;
-	public $send_datetime = false; // 1.8.4
-	public $error;
-	public $success;
-	public $status; // new in 1.7
-	public $info;
-	public $cost; // new in 1.8
-	public $balance; // new in 1.8
-	// public $limit; // removed 1.8
-	
-	public function __construct( $apikey = false,  $charset = false, $from = false ) {
+ Example 2 (send & replace sender):
+	include('smspilot.php');
+ 	if (sms('79087964781','Привет', 'TestSMS'))
+		echo 'Сообщение успешно отправлено';
+	else
+		echo 'Ошибка! '.sms_error();
 		
-		if ($apikey)
-			$this->apikey = $apikey;
-		else if (defined('SMSPILOT_APIKEY'))
-			$this->apikey = SMSPILOT_APIKEY;
+ Example 3 (send list):
+    include('smspilot.php');
+	$phones = array(
+		'79087964781',
+		'79167965432',
+		'79139876543'
+	);
+	sms( $phones,'Hello','Internet');
+
+ Example 4 (send & get cost, balance, status)
+	include('smspilot.php');
+	if ( ($s = sms('79087964781','Сохраняем ID этой sms','Internet')) !== false ) {
+		echo 'Цена='.sms_cost().'<br />' // 0.29
+			.'Баланс='.sms_balance().'<br />' // 430.25
+			.'Статус=<pre>'.print_r( $s[0], true ).'</pre>'; // Array ( [id] => 94 [phone] => 79087964781 [price] => 0.29 [status] => 0 )
+	} else
+		echo sms_error();
+
+ Example 5 (check status)
+ 	include('smspilot.php');
+	if ( ($s = sms_check( 94 )) !== false )
+		print_r( $s[0] ); // Array ( [id] => 94 [phone] => 79087964781 [price] => 0.29 [status] => 2 )
+	else
+		echo sms_error();
+
+ Example 6 (balance);
+   include('smspilot.php');
+   if ( ($b = sms_balance()) !== false )
+	  echo 'Баланс='.$b.' руб.';
+	else
+		echo sms_error();
+ 	
+*/
+
+function sms( $to, $text, $from = false, $send_datetime = false ) {
+	//
+	if (SMSPILOT_CHARSET != 'UTF-8')
+		$text = mb_convert_encoding($text, 'utf-8', SMSPILOT_CHARSET);
+
+	$result = sms_http_post(SMSPILOT_API, array(
+		'send' => $text,
+		'to' => (is_array($to) ? implode(',', $to) : $to),
+		'from' => (($from) ? urlencode($from) : SMSPILOT_FROM),
+		'send_datetime' => $send_datetime,
+		'apikey' => SMSPILOT_APIKEY
+	));
+
+	if ($result) {
+		if (substr($result,0,6) == 'ERROR=') {
+			sms_error( substr($result,6) );
+			return false;
+		} elseif (substr($result,0,8) == 'SUCCESS=') {
 			
-		if ($charset)
-			$this->charset = $charset;
-		else if (defined('SMSPILOT_CHARSET'))	
-			$this->charset = SMSPILOT_CHARSET;
-
-		if ($from)
-			$this->from = $from;
-		else if (defined('SMSPILOT_FROM'))
-			$this->from = SMSPILOT_FROM;
-		
-		if (defined('SMSPILOT_API'))
-			$this->api = SMSPILOT_API;
-		
-	}
-	// send sms via smspilot.ru
-	public function send( $to = false, $text = false, $from = false, $send_datetime = false ) {
-		
-		if ($to)
-			$this->to = $to;
-				
-		if ( $text )
-			$this->text = $text;
-
-		if ( $from )
-			$this->from = $from;
-			
-		if ( $send_datetime )
-			$this->send_datetime = $send_datetime;
-			
-		$this->error = false;
-		$this->success = false;
-		$this->status = array();
-		
-		$text = ($this->charset != 'UTF-8') ? mb_convert_encoding($this->text, 'utf-8', $this->charset ) : $this->text;	
-		
-		$result = $this->http_post($this->api, array(
-			'send' => $text,
-			'to' => ((is_array($this->to)) ? implode(',', $this->to) : $this->to),
-			'from' => $this->from,
-			'send_datetime' => $this->send_datetime,
-			'apikey' => $this->apikey,
-		));
-		
-		//echo $result;
-		
-		if ($result) {
-			if (substr($result,0,6) == 'ERROR=') {
-				$this->error = substr($result,6);
-				return false;
-			} elseif (substr($result,0,8) == 'SUCCESS=') {
-				
-				$this->success = substr($result,8,($p = strpos($result,"\n"))-8);
-				
-				if (preg_match('~([0-9.]+)/([0-9.]+)~', $this->success, $matches )) { // 1.9.10
-					$this->cost = $matches[1]; // new in 1.8
-					$this->balance = $matches[2]; // new in 1.8
-				}
-
-				$status_csv = substr( $result, $p+1 );
-				//status
-				$status_csv = explode( "\n", $status_csv );
-				foreach( $status_csv as $line ) {
-					$s = explode(',', $line);
-					$this->status[] = array(
-						'id' => $s[0],
-						'phone' => $s[1],
-						'price' => $s[2],
-						'status' => $s[3]
-					);
-				}				
-				return $this->status;
-			} else {
-				$this->error = 'UNKNOWN RESPONSE';
-				return false;
+			$success = substr($result,8,($p = strpos($result,"\n"))-8);
+						
+			sms_success( $success );
+			// SENT 24.50/1360.90
+			if (preg_match('~([0-9.]+)/([0-9.]+)~', $success, $matches )) {
+				sms_cost( $matches[1] ); // new in 1.8
+				sms_balance( $matches[2] ); // new in 1.8
+			}			
+			//status
+			$status_csv = substr( $result, $p+1 );
+			$status_csv = explode( "\n", $status_csv );
+			$status = array();
+			foreach( $status_csv as $line ) {
+				$s = explode(',', $line);
+				$status[] = array(
+					'id' => $s[0],
+					'phone' => $s[1],
+					'price' => $s[2],
+					'status' => $s[3]
+				);
 			}
+			sms_status( $status );
+
+			return $status;
 		} else {
-			$this->error = 'CONNECTION ERROR';
+			sms_error( 'UNKNOWN RESPONSE' );
 			return false;
 		}
-	}
-	// check status by sms id or ids
-	public function check( $ids ) { // new in 1.7
+	} else {
+		sms_error( 'CONNECTION ERROR' );
+		return false;		
+	}	
+}
+function sms_check( $id ) {
 	
-		if (is_array($ids))
-			$ids = implode(',', $ids);
-			
-		$this->error = false;
-		$this->success = false;
-		$this->status = array();
-		
-		$result = $this->http_post($this->api, array(
-			'check' => $ids,
-			'apikey' => $this->apikey
-		));
-		
-		if ($result) {
-			
-			if (substr($result,0,6) == 'ERROR=') {
-				
-				$this->error = substr($result,6);
-				return false;
-				
-			} else {
-				
-				$status_csv = $result;
-				//status
-				$status_csv = explode( "\n", $status_csv );
-				foreach( $status_csv as $line ) {
-					$s = explode(',', $line);
-					$this->status[] = array(
-						'id' => $s[0],
-						'phone' => $s[1],
-						'price' => $s[2],
-						'status' => $s[3]
-					);
-				}
-				return $this->status;
+	$result = sms_http_post( SMSPILOT_API, array(
+		'check' => (is_array($id) ? implode(',', $id) : $id),
+		'apikey' => SMSPILOT_APIKEY
+	));
 
-			}
-		} else {
-			$this->error = 'CONNECTION ERROR';
+	if ($result) {
+		if (substr($result,0,6) == 'ERROR=') {
+			sms_error( substr($result,6) );
 			return false;
-		}
-	}
-	// helper to find status by phone
-	public function statusByPhone( $phone ) {
-		
-		foreach( $this->status as $s )
-			if ( $s['phone'] == $phone )
-				return $s;
+		} else {
+				
+			$status_csv = $result;
+			//status
+			$status_csv = explode( "\n", $status_csv );
+			$status = array();
+			foreach( $status_csv as $line ) {
+				$s = explode(',', $line);
+				$status[] = array(
+					'id' => $s[0],
+					'phone' => $s[1],
+					'price' => $s[2],
+					'status' => $s[3]
+				);
+			}
+			return sms_status( $status );
 
+		}
+	} else {
+		sms_error( 'CONNECTION ERROR' );
+		return false;		
+	}
+}
+// new in 1.8
+function sms_balance( $set = NULL ) {
+	static $b;
+	if ( $set !== NULL )
+		return $b = $set;
+	elseif (isset($b))
+		return $b;
+	
+	$result = sms_http_post( SMSPILOT_API, array(
+		'balance' => 'rur',
+		'apikey' => SMSPILOT_APIKEY
+	));
+
+	if (strlen($result)) {
+		if (substr($result,0,6) == 'ERROR=') {
+			sms_error( substr($result,6) );
+			return false;
+		} else
+			return $b = $result;
+	} else {
+		sms_error( 'CONNECTION ERROR' );
 		return false;
 	}
-	public function balance( $currency = 'rur' ) {
+}
+function sms_info() {
 		
-		$result = $this->http_post($this->api, array(
-			'balance' => $currency,
-			'apikey' => $this->apikey
-		));
-
-		if (strlen($result)) {
-			if (substr($result,0,6) == 'ERROR=') {
-				$this->error = substr($result, 6);
-				return false;				
-			} else
-				return $this->balance = $result;
-		} else {
-			$this->error = 'CONNECTION ERROR';
-			return false;				
-		}
-
-	}
-	// apikey info
-	public function info() {
-		
-		$result = $this->http_post( $this->api, array(
-			'apikey' => $this->apikey
-		));
-
-		if ($result) {
-			if (substr($result,0,6) == 'ERROR=') {
-				$this->error = substr($result, 6);
-				return false;
-				
-			} elseif (substr($result,0,8) == 'SUCCESS=') {
-				$s = substr($result,8, ($p = strpos($result,"\n"))-8);
-				
-				$this->success = $s;
-				
-				$lines = explode("\n",substr($result,$p));
-				
-				$this->info = array();
-				foreach( $lines as $line )
-					if ($p = strpos($line,'='))
-						$this->info[ substr($line,0,$p) ] = substr($line,$p+1);
-						
+	$result = sms_http_post( SMSPILOT_API, array(
+		'apikey' => SMSPILOT_APIKEY
+	));
 	
-				if ($this->charset != 'UTF-8')
-					foreach( $this->info as $k => $v)
-						$this->info[ $k ] = mb_convert_encoding($v,$this->charset,'UTF-8');
-				
-				if (isset($this->info['balance'])) $this->balance = $this->info['balance'];
-				
-				return true;
-			} else {
-				$this->error = 'UNKNOWN RESPONSE';
-				return false;
-			}
-		} else {
-			$this->error = 'CONNECTION ERROR';
-			return false;				
+	if ($result) {
+		if (substr($result,0,6) == 'ERROR=') {
+			sms_error( substr($result, 6) );
+		} elseif (substr($result,0,8) == 'SUCCESS=') {
+			
+			$s = substr($result,8, $p = strpos($result,"\n"));
+			
+			sms_success( $s );
+			
+			$lines = explode("\n",substr($result,$p));
+			
+			$info = array();
+			foreach( $lines as $line )
+				if ($p = strpos($line,'='))
+					$info[ substr($line,0,$p) ] = substr($line,$p+1);
+
+			if (SMSPILOT_CHARSET != 'UTF-8')
+				foreach( $info as $k => $v)
+					$info[ $k ] = mb_convert_encoding($v,SMSPILOT_CHARSET,'UTF-8');
+
+			return $info;
 		}
+	} else {
+		sms_error( 'CONNECTION ERROR' );
+		return false;				
 	}
-	// sockets version HTTP/POST
-	public function http_post( $url, $data ) {
-		
-		$eol = "\r\n";
-		
-		$post = '';
+}
+//
+function sms_error( $set = NULL ) {
+	static $e;
+	if ($set !== NULL)
+		return $e = $set;
+	else
+		return (isset($e)) ? $e : false;
+}
+function sms_success( $set = NULL ) {
+	static $s;
 	
-		if (is_array($data)) {
-			foreach( $data as $k => $v)
-				$post .= $k.'='.urlencode($v).'&';
-			$post = substr($post,0,-1);
-			$content_type = 'application/x-www-form-urlencoded';
-		} else {
-			$post = $data;
-			if (strpos($post, '<?xml') === 0)
-				$content_type = 'text/xml';
-			else if (strpos($post, '{') === 0)
-				$content_type = 'application/json';
-			else
-				$content_type = 'text/html';
-		}
-		if ((($u = parse_url($url)) === false) || !isset($u['host'])) return false;
-		
-		if (!isset($u['scheme'])) $u['scheme'] = 'http';
-				
-		$request = 'POST '.(isset($u['path']) ? $u['path'] : '/').((isset($u['query'])) ? '?'.$u['query'] : '' ).' HTTP/1.1'.$eol
-			.'Host: '.$u['host'].$eol
-			.'Content-Type: '.$content_type.$eol
-			.'Content-Length: '.mb_strlen($post, 'latin1').$eol
-			.'Connection: close'.$eol.$eol
-			.$post;
-		
-		$host = ($u['scheme'] == 'https') ? 'ssl://'.$u['host'] : $u['host'];
-		
-		if (isset($u['port']))
-			$port = $u['port'];
+	if ($set !== NULL)
+		return $s = $set;
+	else
+		return (isset($s)) ? $s : false;	
+}
+// new in 1.7
+function sms_status( $set = NULL ) {
+	static $s;
+	if ($set !== NULL )
+		return $s = $set;
+	else
+		return (isset($s)) ? $s : false;
+}
+// new in 1.8
+function sms_cost( $set = NULL ) {
+	static $c;
+	if ($set !== NULL)
+		return $c = $set;
+	else
+		return (isset($c)) ?  $c : 1;
+}
+// 1.8.4
+// sockets version HTTP/POST
+function sms_http_post( $url, $data ) {
+	
+	$eol = "\r\n";
+	
+	$post = '';
+
+	if (is_array($data)) {
+		foreach( $data as $k => $v)
+			$post .= $k.'='.urlencode($v).'&';
+		$post = substr($post,0,-1);
+		$content_type = 'application/x-www-form-urlencoded';
+	} else {
+		$post = $data;
+		if (strpos($post, '<?xml') === 0)
+			$content_type = 'text/xml';
+		else if (strpos($post, '{') === 0)
+			$content_type = 'application/json';
 		else
-			$port = ($u['scheme'] == 'https') ? 443 : 80;
+			$content_type = 'text/html';
+	}
+	if ((($u = parse_url($url)) === false) || !isset($u['host'])) return false;
+	
+	if (!isset($u['scheme'])) $u['scheme'] = 'http';
+			
+	$request = 'POST '.(isset($u['path']) ? $u['path'] : '/').((isset($u['query'])) ? '?'.$u['query'] : '' ).' HTTP/1.1'.$eol
+		.'Host: '.$u['host'].$eol
+		.'Content-Type: '.$content_type.$eol
+		.'Content-Length: '.mb_strlen($post, 'latin1').$eol
+		.'Connection: close'.$eol.$eol
+		.$post;
+	
+	$host = ($u['scheme'] == 'https') ? 'ssl://'.$u['host'] : $u['host'];
+	
+	if (isset($u['port']))
+		$port = $u['port'];
+	else
+		$port = ($u['scheme'] == 'https') ? 443 : 80;
+	
+	$fp = @fsockopen( $host, $port, $errno, $errstr, 10);
+	if ($fp) {
 		
-		$fp = @fsockopen( $host, $port, $errno, $errstr, 10);
-		if ($fp) {
-			
-			$content = '';
-			$content_length = false;
-			$chunked = false;
-			
-			fwrite($fp, $request);
-			
-			// read headers				
-			while ($line = fgets($fp)) {
-				if ( preg_match('/^HTTP\/[^\s]*\s(.*?)\s/',$line, $m) && $m[1] != 200) {
-					fclose($fp);
-					return false;
-				} else if (preg_match('~Content-Length: (\d+)~i', $line, $matches)) {	
-					$content_length = (int) $matches[1];
-				} else if (preg_match('~Transfer-Encoding: chunked~i', $line)) {
-					$chunked = true;
-				} else if ($line == "\r\n") {
-					break;
-				}
-
-			}
-			// read content		
-			if ($content_length !== false) {
-				
-				$_size = 4096;
-				do {
-					$_data = fread($fp, $_size );
-					$content .= $_data;
-					$_size = min($content_length-strlen($content), 4096);
-				} while( $_size > 0 );
-				
-//				$content = fread($fp, $content_length);
-				
-			} else if ($chunked) {
+		$content = '';
+		$content_length = false;
+		$chunked = false;
 		
-				while ( $chunk_length = hexdec(trim(fgets($fp))) ) {
-					
-					$chunk = '';
-					$read_length = 0;
-
-					while ( $read_length < $chunk_length ) {
-
-						$chunk .= fread($fp, $chunk_length - $read_length);
-						$read_length = strlen($chunk);
-
-					}				
-					$content .= $chunk;
-
-					fgets($fp);
-
-				}
-			} else {
-				while(!feof($fp)) $content .= fread($fp, 4096);
+		fwrite($fp, $request);
+		
+		// read headers				
+		while ($line = fgets($fp)) {
+			if ( preg_match('/^HTTP\/[^\s]*\s(.*?)\s/',$line, $m) && $m[1] != 200) {
+				fclose($fp);
+				return false;
+			} else if (preg_match('~Content-Length: (\d+)~i', $line, $matches)) {	
+				$content_length = (int) $matches[1];
+			} else if (preg_match('~Transfer-Encoding: chunked~i', $line)) {
+				$chunked = true;
+			} else if ($line == "\r\n") {
+				break;
 			}
-			fclose($fp);
-			
-			return $content;
-			
-		} else {
-			return false;
+
 		}
+		// read content		
+		if ($content_length !== false) {
+
+			$_size = 4096;
+			do {
+    			$_data = fread($fp, $_size );
+				$content .= $_data;
+				$_size = min($content_length-strlen($content), 4096);
+			} while( $_size > 0 );
+			
+		} else if ($chunked) {
+	
+			while ( $chunk_length = hexdec(trim(fgets($fp))) ) {
+				
+				$chunk = '';
+				$read_length = 0;
+
+				while ( $read_length < $chunk_length ) {
+
+					$chunk .= fread($fp, $chunk_length - $read_length);
+					$read_length = strlen($chunk);
+
+				}				
+				$content .= $chunk;
+
+				fgets($fp);
+
+			}
+		} else {
+			while(!feof($fp)) $content .= fread($fp, 4096);
+		}
+		fclose($fp);
+		
+//		echo $content;
+		
+		return $content;
+		
+	} else {
+		return false;
 	}
 }
 
+}
 ?>

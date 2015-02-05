@@ -16,8 +16,15 @@ $form = $this->beginWidget('CActiveForm', array(
 if (isset($users))
     foreach ($users as $user)
     {
+        if ($user->role == 'admin')
+          $role = '<span class="badge" style="color:#FFD700;">Администратор</span>';
+        elseif ($user->role == 'user')
+            $role = '<span class="badge">Пользователь</span>';
+          
+          
         echo '<a class="list-group-item" href="/?r=backend/UserAdmin&id='.$user->id.'">';
         echo $user->surname.'  '.$user->name
+        .$role
         .'<span class="badge">'.$user->phone.'</span>';
         echo '</a>';
     }

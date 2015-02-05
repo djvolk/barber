@@ -20,7 +20,7 @@
                 ?>
         <div class="gallery-item picture-icon"> 
                     <a class="gallery-zoom zoomer" data-rel="gallery_group" href="images/gallery/photo/<?= $image['image'] ?>">
-                        <img width="199" height="154" alt="" class="pic" src="images/gallery/photo/<?= $image['image'] ?>" title="<?= $image['title'] ?>">
+                        <img width="200"  alt="" class="pic" src="images/gallery/photo/<?= $image['image'] ?>" title="<?= $image['title'] ?>">
                     </a>	
                 </div><!--/ gallery-item-->
             <?php } ?>	

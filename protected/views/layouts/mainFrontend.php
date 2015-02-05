@@ -60,20 +60,20 @@
 
             <!-- ***************** - START Footer - ***************** --> 
 
-            <?php             
-                    $vkontakte = Contact::model()->findByAttributes(array('field' => 'vkontakte'));
-                    $facebook = Contact::model()->findByAttributes(array('field' => 'facebook'));
-                    $youtube = Contact::model()->findByAttributes(array('field' => 'youtube'));
-                    $instagram = Contact::model()->findByAttributes(array('field' => 'instagram'));
+            <?php
+            $vkontakte = Contact::model()->findByAttributes(array('field' => 'vkontakte'));
+            $facebook = Contact::model()->findByAttributes(array('field' => 'facebook'));
+            $youtube = Contact::model()->findByAttributes(array('field' => 'youtube'));
+            $instagram = Contact::model()->findByAttributes(array('field' => 'instagram'));
             ?>
             <footer id="footer">
                 <ul class="entry-footer">
                     <li>
                         <ul class="social-list">
-                            <li class="soc1"><a href="<?=$vkontakte->value?>"></a></li>
-                            <li class="soc2"><a href="<?=$facebook->value?>"></a></li>
-                            <li class="soc3"><a href="<?=$youtube->value?>"></a></li>
-                            <li class="soc4"><a href="<?=$instagram->value?>"></a></li>
+                            <li class="soc1"><a href="<?= $vkontakte->value ?>"></a></li>
+                            <li class="soc2"><a href="<?= $facebook->value ?>"></a></li>
+                            <li class="soc3"><a href="<?= $youtube->value ?>"></a></li>
+                            <li class="soc4"><a href="<?= $instagram->value ?>"></a></li>
                         </ul>
                     </li>
                     <li>
@@ -104,6 +104,16 @@
             echo '</div>';
         }
         ?>
+        <!-- ***************** - END Login Form - ***************** -->
+
+        <?php
+        $form = new User();
+        echo '<div class="login" style="top: 200px;">';
+        $this->renderPartial('loginDemo', array('form' => $form), false, true);
+        echo '</div>';
+        ?>
+        <!-- ***************** - END Login Form - ***************** -->
+
         <!-- ***************** - END Login Form - ***************** -->
 
         <div id="controls-wrapper">

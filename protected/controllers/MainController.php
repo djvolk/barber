@@ -15,7 +15,7 @@ class MainController extends Controller {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
                 'actions' => array('Index', 'Error',
-                    'Registration', 'Login', 'Logout', 'ForgotPassword',
+                    'Registration', 'Login', 'Logout', 'ForgotPassword', 'LoginUser', 'LoginAdmin',
                     'News', 'NewsRead',
                     'Gallery',
                     'Service',
@@ -212,6 +212,22 @@ class MainController extends Controller {
         {
             $this->renderPartial('loginGood');
         }
+    }
+
+    public function actionLoginAdmin() {
+        $form = new User();
+        $form->mail = '1@mail.ru';
+        $form->password = md5('123456');
+        $form->scenario = 'login';
+        $form->validate();
+    }
+
+    public function actionLoginUser() {
+        $form = new User();
+        $form->mail = '2@mail.ru';
+        $form->password = md5('123456');
+        $form->scenario = 'login';
+        $form->validate();
     }
 
     public function actionLogout() {

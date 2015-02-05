@@ -920,10 +920,10 @@ class BackendController extends Controller {
             $operation = Operations::model()->findByPk($_POST["operation"]);
 
             $model = Reserv::model()->findByPk($_GET['id']);
-            
+
             $old_time = $model->time_start;
             $old_operation_id = $model->operation_id;
-            
+
             $model->user_id = $_POST["user"];
             $model->operation_id = $_POST["operation"];
             $model->time_start = $_POST["time"];
@@ -1141,8 +1141,17 @@ class BackendController extends Controller {
             $model->name = strip_tags($_POST['name']);
             $model->surname = strip_tags($_POST['surname']);
             $model->mail = strip_tags($_POST['mail']);
-            if ($model->save())
-                $this->redirect(array('Profile'));
+            if ($model->id != 1 AND $model->id != 2)
+            {
+                if ($model->save())
+                    $this->redirect(array('Profile'));
+            } else
+            {
+             $model->addError('name', 'Это демо профиль, Вы не можете изменить это поле.');
+             $model->addError('surname', 'Это демо профиль, Вы не можете изменить это поле.');
+             $model->addError('mail', 'Это демо профиль, Вы не можете изменить это поле.');
+            }
+                
         }
 
         if (isset($_POST['SaveCard']))
@@ -1175,6 +1184,11 @@ class BackendController extends Controller {
             if (empty($_POST['new_password']) || empty($_POST['new_password2']))
                 $model->addError('new_password', 'Введите новый пароль.');
 
+            if ($model->id == 1 OR $model->id == 2)
+            {
+             $model->addError('old_password', 'Это демо профиль, Вы не можете изменить это поле.');
+            }
+            
             if (!$model->hasErrors())                                           //если нет ошибок
             {
                 $model->password = md5(strip_tags(($_POST['new_password'])));
@@ -1263,7 +1277,7 @@ class BackendController extends Controller {
     public function actionUsersAdmin() {
 
         $criteria = new CDbCriteria;
-        $criteria->condition = 'role = "user"';
+        //$criteria->condition = 'role = "user"';
         $criteria->order = 'surname ASC';
         $count = User::model()->count($criteria);
 
