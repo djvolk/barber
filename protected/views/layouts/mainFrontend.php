@@ -14,7 +14,7 @@
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <meta name="keywords" content="<?php echo CHtml::encode($this->pageTitle); ?>"/>
         <meta name="description" content="<?php echo CHtml::encode($this->pageTitle); ?>"/>
-        
+
         <link rel="shortcut icon" href="images/scrissons.ico" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="stylesheet" type="text/css" href="css/font-awesome-4.1.0/css/font-awesome.min.css" />
@@ -47,7 +47,8 @@
 
             <div id="navigation" class="navigation">
                 <ul>
-                    <li><a href="news" data-speed="1000" data-easing="easeOutBack">Новости</a></li>
+                    <li><a href="main" id='main' data-speed="1000" data-easing="easeOutBack">Главная</a></li>
+                    <!--                    <li><a href="news" data-speed="1000" data-easing="easeOutBack">Новости</a></li>-->
                     <li><a href="service" data-speed="1000" data-easing="easeOutBack">Услуги</a></li>
                     <li><a href="gallery" data-speed="1000" data-easing="easeOutBack">Галлерея</a></li>
                     <li><a href="shop" data-speed="1000" data-easing="easeOutBack">Магазин</a></li>
@@ -127,7 +128,7 @@
                     <div id="next" class="next"></div>
                     <div id="prev" class="prev"></div>	
                     <span class="direction-play">
-                        <a href="#" id="play" class="pause"></a>
+                        <a href="#" id="play" class="play"></a>
                     </span>
                 </div><!--/ -->
             </div><!--/ direction-box-->
@@ -145,7 +146,17 @@
             </div>
 
         </div><!--/ content_wrapper--> 
-        <script type="text/javascript" src="js/general.js"></script>
+        <script type="text/javascript" src="/js/general.js"></script>
     </body>
 </html>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#play").addClass('pause').removeClass('play');
+        intervalID = setInterval("$('#next').trigger('click')", 10000);
+
+        setTimeout(function () {
+            $("#main").click();
+        }, 1000);
+    });
+</script>

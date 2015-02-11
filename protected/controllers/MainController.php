@@ -17,7 +17,8 @@ class MainController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('Index', 'Error',
+                'actions' => array('Index', 'Error', 
+                    'Main',
                     'Registration', 'Login', 'Logout', 'ForgotPassword', 'LoginUser', 'LoginAdmin',
                     'News', 'NewsRead',
                     'Gallery',
@@ -41,11 +42,15 @@ class MainController extends Controller {
     }
 
     public function actionIndex() {
-
-        $form = new User();
-        $this->render('index', array('form' => $form));
+        $this->render('index');
     }
 
+    public function actionMain() {
+        
+        $this->renderPartial('main', array(
+                ), false, false);
+    }
+    
     public function actionNews() {
 
         if ($_POST['page'])

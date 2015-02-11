@@ -391,12 +391,12 @@ jQuery(document).ready(function($){
 			});
 			
 		play.bind('click', function() {
-			if($(this).hasClass('pause')) {
+			if($(this).hasClass('play')) {
+                            $(this).addClass('pause').removeClass('play');
+			    intervalID = setInterval("$('#next').trigger('click')", 10000);
+			} else {
 				clearInterval(intervalID);
 				$(this).removeClass('pause').addClass('play');
-			} else {
-				$(this).addClass('pause').removeClass('play');
-				intervalID = setInterval("$('#next').trigger('click')", 10000);
 			}
 		});
 			
