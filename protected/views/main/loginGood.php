@@ -8,9 +8,9 @@
 <div>
     <?php
     if (Yii::app()->user->role == 'admin')
-        echo CHtml::button('ЛИЧНЫЙ КАБИНЕТ', array('onclick' => 'js:document.location.href="index.php?r=backend/reservAdmin"', 'class' => 'button', 'style' => 'margin-left: 10px; ',));
+        echo CHtml::button('ЛИЧНЫЙ КАБИНЕТ', array('onclick' => 'js:document.location.href="backend/reservAdmin"', 'class' => 'button', 'style' => 'margin-left: 10px; ',));
     elseif (Yii::app()->user->role == 'user')
-        echo CHtml::button('ЛИЧНЫЙ КАБИНЕТ', array('onclick' => 'js:document.location.href="index.php?r=backend/reserv"', 'class' => 'button', 'style' => 'margin-left: 10px; ',));
+        echo CHtml::button('ЛИЧНЫЙ КАБИНЕТ', array('onclick' => 'js:document.location.href="backend/reserv"', 'class' => 'button', 'style' => 'margin-left: 10px; ',));
     echo CHtml::button("ВЫЙТИ", array('id' => 'butLogout', 'name' => 'butLogout', 'class' => 'button', 'style' => 'margin-left: 35px;',));
     ?>     
 </div>
@@ -19,7 +19,7 @@
     $("#butLogout").click(function () {
         $.ajax({
             type: "POST",
-            url: '/index.php?r=main/logout',
+            url: 'logout',
             cache: false,
             data: jQuery(this).parents("form").serialize(),
             success: function (html) {

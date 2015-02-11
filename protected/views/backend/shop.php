@@ -59,7 +59,7 @@ $form = $this->beginWidget('CActiveForm', array(
             {
                 foreach ($products as $product)
                 {
-                    echo '<a class="list-group-item" href="/?r=backend/EditProduct&id='.$product->id.'">';
+                    echo '<a class="list-group-item" href="EditProduct?id='.$product->id.'">';
                     echo $product->title.'<span class="badge">'.$product->in_stock.'</span>';
                     echo '</a>';
                 }
@@ -67,7 +67,7 @@ $form = $this->beginWidget('CActiveForm', array(
             {
                 foreach ($products as $product)
                 {
-                    echo '<a class="list-group-item" href="/?r=backend/EditProduct&id='.$product->id.'">';
+                    echo '<a class="list-group-item" href="EditProduct?id='.$product->id.'">';
                     echo $product->title.'<span class="badge">'.$product->in_stock.'</span>';
                     echo '</a>';
                 }

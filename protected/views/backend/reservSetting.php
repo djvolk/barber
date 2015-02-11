@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="css/YiiBootstrap.css" /> 
+    <link rel="stylesheet" type="text/css" href="/css/YiiBootstrap.css" /> 
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
     <?php $this->pageTitle = 'Настройки графика и услуг'; ?>
 </head>

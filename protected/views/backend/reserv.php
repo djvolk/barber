@@ -1,7 +1,7 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/css/datepicker.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script> 
-    <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
     <?php $this->pageTitle = 'Запись - '.Yii::app()->name; ?>
 </head>
 
@@ -167,7 +167,7 @@ $form = $this->beginWidget('CActiveForm', array(
         }).on('changeDate', function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/UpdateDate',
+                url: 'UpdateDate',
                 cache: false,
                 data: jQuery(this).parents("form").serialize(),
                 success: function (html) {
@@ -181,7 +181,7 @@ $form = $this->beginWidget('CActiveForm', array(
         $("#operations").change(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/LoadOperation',
+                url: 'LoadOperation',
                 cache: false,
                 data: jQuery(this).parents("form").serialize(),
                 success: function (html) {
@@ -193,7 +193,7 @@ $form = $this->beginWidget('CActiveForm', array(
         $(".time").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/LoadDate',
+                url: 'LoadDate',
                 cache: false,
                 data: {'time': $(this).attr('time')},
                 success: function (html) {
@@ -214,7 +214,7 @@ $form = $this->beginWidget('CActiveForm', array(
     function cancel_click($id) {
         $.ajax({
             type: "POST",
-            url: '/index.php?r=backend/CancelReserv',
+            url: 'CancelReserv',
             cache: false,
             data: {'id': $id},
             success: function (html) {

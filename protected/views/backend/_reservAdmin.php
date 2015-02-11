@@ -86,7 +86,7 @@
         }).on('changeDate', function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/UpdateDateAdmin',
+                url: 'UpdateDateAdmin',
                 cache: false,
                 data: jQuery(this).parents("form").serialize(),
                 success: function (html) {
@@ -100,7 +100,7 @@
         $(".info").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/LoadReservAdmin',
+                url: 'LoadReservAdmin',
                 cache: false,
                 data: {'id': $(this).attr('id')},
                 success: function (html) {
@@ -114,7 +114,7 @@
         $(".time").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/LoadTimeAdmin',
+                url: 'LoadTimeAdmin',
                 cache: false,
                 data: {'id': $(this).attr('id'), 'time': $(this).attr('time')},
                 success: function (html) {

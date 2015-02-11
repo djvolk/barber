@@ -4,13 +4,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
 
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> 
-        <link rel="stylesheet" type="text/css" href="css/sb-admin.css" /> 
-        <link rel="stylesheet" type="text/css" href="css/plugins/morris.css" /> 
-        <link rel="stylesheet" type="text/css" href="css/font-awesome-4.1.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" /> 
+        <link rel="stylesheet" type="text/css" href="/css/sb-admin.css" /> 
+        <link rel="stylesheet" type="text/css" href="/css/plugins/morris.css" /> 
+        <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.1.0/css/font-awesome.min.css" />
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
-        <link rel="shortcut icon" href="images/scrissons.ico" />
+        <link rel="shortcut icon" href="/images/scrissons.ico" />
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     </head>
 
@@ -22,9 +22,9 @@
                 <div class="navbar-header">
                     <?php
                     if (Yii::app()->user->role == 'admin')
-                        echo '<a class="navbar-brand" href="index.php?r=backend/reservAdmin"><i class="fa fa-fw fa-bars"></i>Личный кабинет</a>';
+                        echo '<a class="navbar-brand" href="/backend/reservAdmin"><i class="fa fa-fw fa-bars"></i>Личный кабинет</a>';
                     elseif (Yii::app()->user->role == 'user')
-                        echo '<a class="navbar-brand" href="index.php?r=backend/reserv"><i class="fa fa-fw fa-bars"></i>Личный кабинет</a>';
+                        echo '<a class="navbar-brand" href="/backend/reserv"><i class="fa fa-fw fa-bars"></i>Личный кабинет</a>';
                     ?>
                     <a class="navbar-brand" style="margin-left: 30px;" href="<?= Yii::app()->homeUrl ?>"><i class="fa fa-reply-all"></i> вернуться на сайт</a>
                 </div>
@@ -39,11 +39,11 @@
                             <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-<?php echo CHtml::link('<i class="fa fa-fw fa-user"></i>Профиль', array('backend/profile'), array()); ?>
+<?php echo CHtml::link('<i class="fa fa-fw fa-user"></i>Профиль', array('/backend/profile'), array()); ?>
                             </li>
                             <li class="divider"></li>
                             <li>
-<?php echo CHtml::link('<i class="fa fa-fw fa-power-off"></i>Выход', array('backend/logout'), array()); ?>
+<?php echo CHtml::link('<i class="fa fa-fw fa-power-off"></i>Выход', array('/backend/logout'), array()); ?>
                             </li>
                         </ul>
                     </li>
@@ -87,7 +87,7 @@
         </div>
 
 
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <!--        <script type="text/javascript" src="js/plugins/morris/raphael.min.js"></script>
         <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>
         <script type="text/javascript" src="js/plugins/morris/morris-data.js"></script>-->

@@ -1,9 +1,10 @@
-<?php
-/* @var $this MainController */
-/* @var $dataProvider CActiveDataProvider */
-?>
+<head>
+    <title><?php echo 'Контакты - '.Yii::app()->name; ?></title>
+    <meta name="keywords" content="<?php echo 'Контакты - '.Yii::app()->name; ?>"/>
+    <meta name="description" content="<?php echo 'Контакты, Телефон, Адрес - '.Yii::app()->name; ?>"/>   
+</head>
 
-<?php $this->pageTitle = 'Контакты - '.Yii::app()->name; ?>
+<script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 <style type="text/css" media="screen">
     #YMapsID {
         margin: 0;
@@ -23,19 +24,19 @@
     <h3 style="font-size: 1.8em;">Контакты:</h3>
     <table cellspacing="10" style="font-size: 13pt; font-family: 'Pompadur'; font-weight: normal;">
         <tr>
-            <td><b>Адрес:</b></td>
+            <td><h5 style="margin-bottom: 10px;">Адрес:</h5></td>
             <td><?= $contact['address'] ?></td>
         </tr>
         <tr>
-            <td><b>Телефон:</b></td>
+            <td><h5 style="margin-bottom: 10px;">Телефон:</h5></td>
             <td><?= $contact['phone'] ?></td>
         </tr> 
         <tr>
-            <td><b>Email:</b></td>
+            <td><h5 style="margin-bottom: 10px;">Email:</h5></td>
             <td><?= $contact['email'] ?></td>
         </tr> 
         <tr>
-            <td><b>Информация:</b></td>
+            <td><h5 style="margin-bottom: 10px;">Информация:</h5></td>
             <td><?= $contact['info'] ?></td>
         </tr> 
     </table>

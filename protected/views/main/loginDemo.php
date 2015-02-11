@@ -24,12 +24,12 @@
     $("#butLoginAdmin").click(function () {
         $.ajax({
             type: "POST",
-            url: '/index.php?r=main/loginAdmin',
+            url: 'loginAdmin',
             cache: false,
             data: jQuery(this).parents("form").serialize(),
             success: function (html) {
                 //jQuery("#login").html(html);
-                document.location.href = "index.php?r=backend/reservAdmin";
+                document.location.href = "backend/reservAdmin";
             }
         });
     });
@@ -37,12 +37,12 @@
     $("#butLoginUser").click(function () {
         $.ajax({
             type: "POST",
-            url: '/index.php?r=main/loginUser',
+            url: 'loginUser',
             cache: false,
             data: jQuery(this).parents("form").serialize(),
             success: function (html) {
                 //jQuery("#login").html(html);
-                document.location.href = "index.php?r=backend/reserv";
+                document.location.href = "backend/reserv";
             }
         });
     });

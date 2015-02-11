@@ -22,7 +22,7 @@ if (isset($users))
             $role = '<span class="badge">Пользователь</span>';
           
           
-        echo '<a class="list-group-item" href="/?r=backend/UserAdmin&id='.$user->id.'">';
+        echo '<a class="list-group-item" href="/backend/UserAdmin?id='.$user->id.'">';
         echo $user->surname.'  '.$user->name
         .$role
         .'<span class="badge">'.$user->phone.'</span>';

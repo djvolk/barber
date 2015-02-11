@@ -78,7 +78,7 @@
         }).on('changeDate', function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/UpdateDate',
+                url: 'UpdateDate',
                 cache: false,
                 data: jQuery(this).parents("form").serialize(),
                 success: function (html) {
@@ -92,7 +92,7 @@
         $(".time").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/LoadDate',
+                url: 'LoadDate',
                 cache: false,
                 data: {'time': $(this).attr('time')},
                 success: function (html) {

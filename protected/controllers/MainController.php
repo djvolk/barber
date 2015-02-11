@@ -3,7 +3,10 @@
 class MainController extends Controller {
 
     public $layout = '//layouts/column1';
-
+    
+    public $description = '';
+    public $keywords = '';
+    
     public function filters() {
         return array(
             'accessControl',

@@ -1,9 +1,8 @@
-<?php
-/* @var $this MainController */
-/* @var $dataProvider CActiveDataProvider */
-?>
-
-<?php $this->pageTitle = 'Магазин - '.Yii::app()->name; ?>
+<head>
+    <title><?php echo 'Магазин - '.Yii::app()->name; ?></title>
+    <meta name="keywords" content="<?php echo 'Магазин - '.Yii::app()->name; ?>"/>
+    <meta name="description" content="<?php echo 'Магазин, товары - '.Yii::app()->name; ?>"/>   
+</head>
 
 <div class="home_container">
     <h2>Магазин</h2>	
@@ -32,7 +31,7 @@
         $(".zoomer").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=main/shopProducts',
+                url: 'shopProducts',
                 cache: false,
                 data: {'id': $(this).attr('category_id')},
                 success: function (html) {

@@ -1,0 +1,18 @@
+User-Agent: *
+Disallow: /assets
+Disallow: /css
+Disallow: /images
+Disallow: /js
+Disallow: /protected
+Disallow: /themes
+Disallow: /backend
+Disallow: /error
+Disallow: /logout
+Disallow: /forgotPassword
+Disallow: /login
+Disallow: /newsRead
+Disallow: /registration
+Disallow: /shopProduct
+Disallow: /shopProducts
+
+Host: barber.samara-webmaster.com

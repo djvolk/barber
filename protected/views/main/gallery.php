@@ -1,10 +1,8 @@
-<?php
-/* @var $this MainController */
-/* @var $dataProvider CActiveDataProvider */
-?>
-
-
-<?php $this->pageTitle = 'Галерея - '.Yii::app()->name; ?>
+<head>
+    <title><?php echo 'Галерея - '.Yii::app()->name; ?></title>
+    <meta name="keywords" content="<?php echo 'Галерея - '.Yii::app()->name; ?>"/>
+    <meta name="description" content="<?php echo 'Галерея, примеры работ, работы мастера, фотографии, стрижка - '.Yii::app()->name; ?>"/>   
+</head>
 
 <div class="home_container">
     <h2>Галерея</h2>	

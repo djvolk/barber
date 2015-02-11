@@ -1,13 +1,13 @@
 <head>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>	
-    <script type="text/javascript" src="js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-    <script type="text/javascript" src="js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-    <script type="text/javascript" src="js/plupload.full.min.js"></script>
-    <script type="text/javascript" src="js/jquery.plupload.queue.js"></script>
+    <script type="text/javascript" src="/js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+    <script type="text/javascript" src="/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="/js/plupload.full.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.plupload.queue.js"></script>
 
-    <link rel="stylesheet" href="css/jquery.plupload.queue.css" type="text/css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+    <link rel="stylesheet" href="/css/jquery.plupload.queue.css" type="text/css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
     <script type="text/javascript">
         $(document).ready(function () {
             $(".img-thumbnail").fancybox({
@@ -64,7 +64,7 @@ $form = $this->beginWidget('CActiveForm', array(
                                          -moz-text-align-last: justify; 
                                          -webkit-text-align-last: justify; 
                                          text-align-last: justify;">
-                    <p><a class="img-thumbnail"  href="images/gallery/photo/<?= $image['image'] ?>" title="<?= $image['title'] ?>"><img src="images/gallery/photo/<?= $image['image'] ?>" width="150" height="100"/></a></p>  
+                    <p><a class="img-thumbnail"  href="/images/gallery/photo/<?= $image['image'] ?>" title="<?= $image['title'] ?>"><img src="/images/gallery/photo/<?= $image['image'] ?>" width="150" height="100"/></a></p>  
                     <?php echo CHtml::link('Удалить', array('backend/DeleteGallery', 'id' => $image['id']), array('class' => 'btn btn-danger', 'style' => 'float:center;', 'confirm' => 'Хотите удалить фотографию?')); ?>                          
                 </div>
             <?php } ?>

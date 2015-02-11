@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Demo Website',
+	'name'=>'Салон Валерия Аксенова',
         'defaultController'=>'main/index',
 	'preload'=>array('log'),
 	'import'=>array(
@@ -39,7 +39,14 @@ return array(
                       'class' => 'application.components.SmsPilot',
                 ) ,           
 		'urlManager'=>array(
-                        'showScriptName' => false,
+                         'urlFormat' => 'path',
+                         'showScriptName' => false,
+                         'rules'          => array(
+                            'shop' => 'main/shopCategories',
+                            'backend/<action>' => 'backend/<action>',
+                            '<action>' => 'main/<action>',
+                            array('sitemap/index', 'pattern'=>'sitemap.xml', 'urlSuffix'=>''),
+                    ),
 		),
 		
 		'db'=>array(

@@ -53,7 +53,7 @@
         $(".back").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=main/news',
+                url: 'news',
                 cache: false,
                 data: {'page': $(this).attr('page')},
                 success: function (html) {

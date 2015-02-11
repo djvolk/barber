@@ -104,7 +104,7 @@
         $("#ChangePhone").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/SaveProfile',
+                url: 'SaveProfile',
                 cache: false,
                 data: jQuery(this).parents("form").serialize(),
                 success: function (html) {
@@ -119,7 +119,7 @@
     function confirmPhone() {
         $.ajax({
             type: "POST",
-            url: '/index.php?r=backend/SaveProfile',
+            url: 'SaveProfile',
             cache: false,
             data: jQuery(this).parents("form").serialize(),
             success: function (html) {
@@ -133,7 +133,7 @@
     function savePass() {
         $.ajax({
             type: "POST",
-            url: '/index.php?r=backend/SaveProfile',
+            url: 'SaveProfile',
             cache: false,
             data: $("#password-form").serialize(),
             success: function (html) {

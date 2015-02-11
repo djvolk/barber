@@ -71,7 +71,7 @@
         $(".zoomer").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=main/shopProduct',
+                url: 'shopProduct',
                 cache: false,
                 data: {'id': $(this).attr('product_id')},
                 success: function (html) {
@@ -93,7 +93,7 @@
         $(".back").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=main/shopCategories',
+                url: 'shop',
                 cache: false,
                 success: function (html) {
                     jQuery('#cont').html(html);

@@ -1,8 +1,8 @@
-<?php
-/* @var $this MainController */
-/* @var $dataProvider CActiveDataProvider */
-?>
-<?php $this->pageTitle = 'Регистрация - '.Yii::app()->name; ?>
+<head>
+    <title><?php echo 'Регистрация - '.Yii::app()->name; ?></title>
+    <meta name="keywords" content="<?php echo 'Регистрация - '.Yii::app()->name; ?>"/>
+    <meta name="description" content="<?php echo 'Регистрация - '.Yii::app()->name; ?>"/>   
+</head>
 
 <div class="home_container">
     <h2>Регистрация</h2>	
@@ -46,7 +46,7 @@
         $("#butReg").click(function () {
             $.ajax( {
                 type: "POST",
-                url: '/index.php?r=main/registration',
+                url: 'registration',
                 cache: false,
                 data: jQuery(this).parents("form").serialize(),
                 success: function (html) {

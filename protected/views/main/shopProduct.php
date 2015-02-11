@@ -55,7 +55,7 @@
         $(".back").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=main/shopProducts',
+                url: 'shopProducts',
                 cache: false,
                 data: {'id': $(this).attr('category_id')},
                 success: function (html) {

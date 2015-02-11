@@ -1,7 +1,7 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/css/datepicker.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script> 
-    <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
     <?php $this->pageTitle = 'Управление записями'; ?>  
 </head>
 
@@ -163,7 +163,7 @@ $form = $this->beginWidget('CActiveForm', array(
         }).on('changeDate', function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/UpdateDateAdmin',
+                url: 'UpdateDateAdmin',
                 cache: false,
                 data: jQuery(this).parents("form").serialize(),
                 success: function (html) {
@@ -177,7 +177,7 @@ $form = $this->beginWidget('CActiveForm', array(
         $(".info").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/LoadReservAdmin',
+                url: 'LoadReservAdmin',
                 cache: false,
                 data: {'id': $(this).attr('id')},
                 success: function (html) {
@@ -191,7 +191,7 @@ $form = $this->beginWidget('CActiveForm', array(
         $(".time").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=backend/LoadTimeAdmin',
+                url: 'LoadTimeAdmin',
                 cache: false,
                 data: {'id': $(this).attr('id'), 'time': $(this).attr('time')},
                 success: function (html) {
@@ -206,7 +206,7 @@ $form = $this->beginWidget('CActiveForm', array(
     function cancel_click($id) {
         $.ajax({
             type: "POST",
-            url: '/index.php?r=backend/CancelReservAdmin',
+            url: 'CancelReservAdmin',
             cache: false,
             data: {'id': $id},
             success: function (html) {

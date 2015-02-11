@@ -1,8 +1,8 @@
 <?php
-/* @var $this MainController */
-/* @var $dataProvider CActiveDataProvider */
+$this->pageTitle = 'Регистрация - '.Yii::app()->name;
+$this->description = 'Регистрация - '.Yii::app()->name;
+$this->keywords = 'Регистрация - '.Yii::app()->name;
 ?>
-<?php $this->pageTitle = 'Регистрация - '.Yii::app()->name; ?>
 
 <div id="register">
     <?= CHtml::form(); ?>
@@ -52,7 +52,7 @@
     $("#butReg").click(function () {
         $.ajax({
             type: "POST",
-            url: '/index.php?r=main/registration',
+            url: 'registration',
             cache: false,
             data: jQuery(this).parents("form").serialize(),
             success: function (html) {

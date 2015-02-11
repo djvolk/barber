@@ -12,7 +12,9 @@
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
         -->
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
-
+        <meta name="keywords" content="<?php echo CHtml::encode($this->pageTitle); ?>"/>
+        <meta name="description" content="<?php echo CHtml::encode($this->pageTitle); ?>"/>
+        
         <link rel="shortcut icon" href="images/scrissons.ico" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="stylesheet" type="text/css" href="css/font-awesome-4.1.0/css/font-awesome.min.css" />
@@ -45,11 +47,11 @@
 
             <div id="navigation" class="navigation">
                 <ul>
-                    <li><a href="index.php?r=main/news" data-speed="1000" data-easing="easeOutBack">Новости</a></li>
-                    <li><a href="index.php?r=main/service" data-speed="1000" data-easing="easeOutBack">Услуги</a></li>
-                    <li><a href="index.php?r=main/gallery" data-speed="1000" data-easing="easeOutBack">Галлерея</a></li>
-                    <li><a href="index.php?r=main/shopCategories" data-speed="1000" data-easing="easeOutBack">Магазин</a></li>
-                    <li><a href="index.php?r=main/contact" data-speed="1000" data-easing="easeOutBack">Контакты</a></li>
+                    <li><a href="news" data-speed="1000" data-easing="easeOutBack">Новости</a></li>
+                    <li><a href="service" data-speed="1000" data-easing="easeOutBack">Услуги</a></li>
+                    <li><a href="gallery" data-speed="1000" data-easing="easeOutBack">Галлерея</a></li>
+                    <li><a href="shop" data-speed="1000" data-easing="easeOutBack">Магазин</a></li>
+                    <li><a href="contact" data-speed="1000" data-easing="easeOutBack">Контакты</a></li>
 
                 </ul>
             </div>

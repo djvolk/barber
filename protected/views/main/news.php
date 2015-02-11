@@ -1,9 +1,9 @@
-<?php
-/* @var $this MainController */
-/* @var $dataProvider CActiveDataProvider */
-?>
+<head>
+    <title><?php echo 'Новости - '.Yii::app()->name; ?></title>
+    <meta name="keywords" content="<?php echo 'Новости - '.Yii::app()->name; ?>"/>
+    <meta name="description" content="<?php echo 'Новости - '.Yii::app()->name; ?>"/>   
+</head>
 
-<?php $this->pageTitle = Yii::app()->name; ?>
 <div class="home_container">
     <h2>Новости</h2>	
 </div><!--/ home_container-->
@@ -69,7 +69,7 @@
         $(".load").click(function () {
             $.ajax({
                 type: "POST",
-                url: '/index.php?r=main/newsRead',
+                url: 'newsRead',
                 cache: false,
                 data: {'id':$(this).attr('news_id'), 'page':$('#link_pager li.selected a').html()},
                 success: function (html) {

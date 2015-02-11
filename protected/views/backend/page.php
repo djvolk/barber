@@ -1,6 +1,6 @@
 <head>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="js/tinymce/tinymce.min.js" >"></script> 
+    <script type="text/javascript" src="/js/tinymce/tinymce.min.js" >"></script> 
     <script type="text/javascript">
                 tinymce.init({
                     selector: "textarea",
