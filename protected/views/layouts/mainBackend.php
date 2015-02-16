@@ -11,9 +11,9 @@
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
         <link rel="shortcut icon" href="/images/scrissons.ico" />
-        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+        <title><?php echo CHtml::encode($this->pageTitle); ?></title>      
     </head>
-
+    
     <body>
 
         <div id="wrapper">
@@ -64,10 +64,10 @@
                                 'items'          => array(
                                     array('label' => '<i class="fa fa-fw fa-pencil-square-o"></i> Запись', 'url' => array('/backend/reservAdmin')),
                                     array('label' => '<i class="fa fa-fw fa-wrench"></i> Настройки', 'url' => array('/backend/reservSetting')))),
+                            array('label' => '<i class="fa fa-fw fa-child fa-lg"></i> Услуги', 'url' => array('/backend/service'), 'visible' => Yii::app()->user->role == 'admin'),
                             array('label' => '<i class="fa fa-fw fa-newspaper-o fa-lg"></i> Новости', 'url' => array('/backend/news'), 'visible' => Yii::app()->user->role == 'admin'),
                             array('label' => '<i class="fa fa-fw fa-picture-o fa-lg"></i> Галлерея', 'url' => array('/backend/gallery'), 'visible' => Yii::app()->user->role == 'admin'),
                             array('label' => '<i class="fa fa-fw fa-shopping-cart fa-lg"></i> Магазин', 'url' => array('/backend/shop'), 'visible' => Yii::app()->user->role == 'admin'),
-                            array('label' => '<i class="fa fa-fw fa-child fa-lg"></i> Услуги', 'url' => array('/backend/service'), 'visible' => Yii::app()->user->role == 'admin'),
                             array('label' => '<i class="fa fa-fw fa-map-marker fa-lg"></i> Контакты', 'url' => array('/backend/contact'), 'visible' => Yii::app()->user->role == 'admin'),
                             array('label' => '<i class="fa fa-fw fa-credit-card fa-lg"></i> Карты', 'url' => array('/backend/cards'), 'visible' => Yii::app()->user->role == 'admin'),
                             array('label' => '<i class="fa fa-fw fa-users fa-lg"></i> Пользователи', 'url' => array('/backend/usersAdmin'), 'visible' => Yii::app()->user->role == 'admin'),

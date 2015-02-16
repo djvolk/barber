@@ -12,21 +12,5 @@
 <div class="error">
 <?php echo CHtml::encode($message); ?>
 </div>
-    
 </div><!--/ content_inner-->
 
-<?php 
-
-
-
-?>
-
-<script>
-    
-    
-    
-    
-    
-    
-    
-    </script>

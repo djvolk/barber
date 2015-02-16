@@ -112,9 +112,14 @@ class MainController extends Controller {
 
     public function actionService() {
 
-        $page = Page::model()->findByAttributes(array('page' => 'service'));
+        $service = Page::model()->findByAttributes(array('page' => 'service'));
+        $reviews = Page::model()->findByAttributes(array('page' => 'reviews'));
+        $images = Gallery::model()->findAll($criteria);
+        
         $this->renderPartial('service', array(
-            'page' => $page,
+            'service' => $service,
+            'reviews' => $reviews,
+            'images' => $images,
                 ), false, true);
     }
 

@@ -12,9 +12,10 @@ header("Pragma: no-cache");
 // Uncomment this one to fake upload time
 // usleep(5000);
 
-$targetDir = '/images/gallery/photo';
+$targetDir = 'images/gallery/photo';
 //$cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds
+
 
 // Get a file name
 if (isset($_REQUEST["name"])) {

@@ -15,9 +15,9 @@
         <meta name="keywords" content="<?php echo CHtml::encode($this->pageTitle); ?>"/>
         <meta name="description" content="<?php echo CHtml::encode($this->pageTitle); ?>"/>
 
-        <link rel="shortcut icon" href="images/scrissons.ico" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="css/font-awesome-4.1.0/css/font-awesome.min.css" />
+        <link rel="shortcut icon" href="/images/scrissons.ico" />
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.1.0/css/font-awesome.min.css" />
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/ui/1.8.24/jquery-ui.min.js"></script>
         <script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
@@ -47,10 +47,10 @@
 
             <div id="navigation" class="navigation">
                 <ul>
-                    <li><a href="main" id='main' data-speed="1000" data-easing="easeOutBack">Главная</a></li>
-                    <!--                    <li><a href="news" data-speed="1000" data-easing="easeOutBack">Новости</a></li>-->
-                    <li><a href="service" data-speed="1000" data-easing="easeOutBack">Услуги</a></li>
-                    <li><a href="gallery" data-speed="1000" data-easing="easeOutBack">Галлерея</a></li>
+<!--                    <li><a href="main" id='main' data-speed="1000" data-easing="easeOutBack">Главная</a></li>-->
+<!--                    <li><a href="news" data-speed="1000" data-easing="easeOutBack">Новости</a></li>-->
+                    <li><a href="service" id='service' data-speed="1000" data-easing="easeOutBack">Услуги</a></li>
+<!--                    <li><a href="gallery" data-speed="1000" data-easing="easeOutBack">Галлерея</a></li>-->
                     <li><a href="shop" data-speed="1000" data-easing="easeOutBack">Магазин</a></li>
                     <li><a href="contact" data-speed="1000" data-easing="easeOutBack">Контакты</a></li>
 
@@ -156,7 +156,7 @@
         intervalID = setInterval("$('#next').trigger('click')", 10000);
 
         setTimeout(function () {
-            $("#main").click();
+            $("#service").click();
         }, 1000);
     });
 </script>

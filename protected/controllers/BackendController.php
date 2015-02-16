@@ -3,7 +3,7 @@
 class BackendController extends Controller {
 
     public $layout = '//layouts/column2';
-    
+
     public function filters() {
         return array(
             'accessControl',
@@ -126,7 +126,11 @@ class BackendController extends Controller {
     public function actionDeleteNews($id) {
         $model = News::model()->findByPk($id);
         if (!empty($model->pic))
-            unlink(getcwd().'/images/news/'.$model->pic);
+        {
+            $filename = getcwd().'/images/news/'.$model->pic;
+            if (file_exists($filename))
+                unlink($filename);
+        }
         $model->delete();
         $this->redirect(array('News'));
     }
@@ -153,7 +157,7 @@ class BackendController extends Controller {
                 }
             }
         }
-        
+
         if (isset($_POST['Cancel']))
         {
             $count = $_POST['uploader_count'];
@@ -162,7 +166,11 @@ class BackendController extends Controller {
                 for ($i = 0; $i < $count; $i++)
                 {
                     if ($_POST['uploader_'.$i.'_status'] == 'done')
-                        unlink(getcwd().'/images/gallery/photo/'.$_POST['uploader_'.$i.'_name']);
+                    {
+                        $filename = getcwd().'/images/gallery/photo/'.$_POST['uploader_'.$i.'_name'];
+                        if (file_exists($filename))
+                            unlink($filename);
+                    }
                 }
             }
         }
@@ -185,7 +193,9 @@ class BackendController extends Controller {
 
     public function actionDeleteGallery($id) {
         $model = Gallery::model()->findByPk($id);
-        unlink(getcwd().'/images/gallery/photo/'.$model->image);
+        $filename = getcwd().'/images/gallery/photo/'.$model->image;
+        if (file_exists($filename))
+            unlink($filename);
         $model->delete();
         $this->redirect(array('Gallery'));
     }
@@ -286,7 +296,11 @@ class BackendController extends Controller {
     public function actionDeleteSlider($id) {
         $model = Slider::model()->findByPk($id);
         if (!empty($model->image))
-            unlink(getcwd().'/images/slider/'.$model->image);
+        {
+            $filename = getcwd().'/images/slider/'.$model->image;
+            if (file_exists($filename))
+                unlink($filename);
+        }
         $model->delete();
         $this->redirect(array('Slider'));
     }
@@ -395,7 +409,11 @@ class BackendController extends Controller {
     public function actionDeleteCategory($id) {
         $model = Category::model()->findByPk($id);
         if (!empty($model->image))
-            unlink(getcwd().'/images/shop/category/'.$model->image);
+        {
+            $filename = getcwd().'/images/shop/category/'.$model->image;
+            if (file_exists($filename))
+                unlink($filename);
+        }
         $model->delete();
         $this->redirect(array('Shop'));
     }
@@ -467,7 +485,11 @@ class BackendController extends Controller {
     public function actionDeleteProduct($id) {
         $model = Product::model()->findByPk($id);
         if (!empty($model->image))
-            unlink(getcwd().'/images/shop/products/'.$model->image);
+        {
+            $filename = getcwd().'/images/shop/products/'.$model->image;
+            if (file_exists($filename))
+                unlink($filename);
+        }        
         $model->delete();
         $this->redirect(array('Shop'));
     }
@@ -1087,16 +1109,23 @@ class BackendController extends Controller {
 
         if (isset($_POST['Save']))
         {
-            $page = Page::model()->findByAttributes(array('page' => 'service'));
-            $page->text = $_POST['Page']['text'];
-            $page->save();
+            $service = Page::model()->findByAttributes(array('page' => 'service'));
+            $service->text = $_POST['service'];
+            $service->save();
+            
+            $reviews = Page::model()->findByAttributes(array('page' => 'reviews'));
+            $reviews->text = $_POST['reviews'];
+            $reviews->save();            
+            
             $this->redirect(array('Service'));
         }
 
-        $page = Page::model()->findByAttributes(array('page' => 'service'));
+        $service = Page::model()->findByAttributes(array('page' => 'service'));
+        $reviews = Page::model()->findByAttributes(array('page' => 'reviews'));
 
-        $this->render('page', array(
-            'page' => $page,
+        $this->render('service', array(
+            'service' => $service,
+            'reviews' => $reviews,
         ));
     }
 
@@ -1147,11 +1176,10 @@ class BackendController extends Controller {
                     $this->redirect(array('Profile'));
             } else
             {
-             $model->addError('name', 'Это демо профиль, Вы не можете изменить это поле.');
-             $model->addError('surname', 'Это демо профиль, Вы не можете изменить это поле.');
-             $model->addError('mail', 'Это демо профиль, Вы не можете изменить это поле.');
+                $model->addError('name', 'Это демо профиль, Вы не можете изменить это поле.');
+                $model->addError('surname', 'Это демо профиль, Вы не можете изменить это поле.');
+                $model->addError('mail', 'Это демо профиль, Вы не можете изменить это поле.');
             }
-                
         }
 
         if (isset($_POST['SaveCard']))
@@ -1186,9 +1214,9 @@ class BackendController extends Controller {
 
             if ($model->id == 1 OR $model->id == 2)
             {
-             $model->addError('old_password', 'Это демо профиль, Вы не можете изменить это поле.');
+                $model->addError('old_password', 'Это демо профиль, Вы не можете изменить это поле.');
             }
-            
+
             if (!$model->hasErrors())                                           //если нет ошибок
             {
                 $model->password = md5(strip_tags(($_POST['new_password'])));
