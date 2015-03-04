@@ -61,10 +61,10 @@
 </div><!-- form -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.content_inner').jScrollPane();
-        setTimeout(function () {
-            $('.content_inner').jScrollPane();
-        }, 50);
+//        $('.content_inner').jScrollPane();
+//        setTimeout(function () {
+//            $('.content_inner').jScrollPane();
+//        }, 50);
 
         $(".load").click(function () {
             $.ajax({

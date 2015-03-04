@@ -1,33 +1,26 @@
-<?php /* @var $this Controller */ ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
 
-        <!-- blueprint CSS framework
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-        -->
-        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
-        <meta name="keywords" content="<?php echo CHtml::encode($this->pageTitle); ?>"/>
-        <meta name="description" content="<?php echo CHtml::encode($this->pageTitle); ?>"/>
+        <title><?php echo Yii::app()->name; ?></title>
+        <meta name="keywords" content="<?php echo Yii::app()->name.' Стрижка, Окраска, Салон красоты, Парикмахерская, Ножницы, Стричься, Прическа'; ?>"/>
+        <meta name="description" content="<?php echo Yii::app()->name.' Онлайн запись в салон. Лучшие новые модные срижки.'; ?>"/>  
 
-        <link rel="shortcut icon" href="/images/scrissons.ico" />
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
-        <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.1.0/css/font-awesome.min.css" />
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/ui/1.8.24/jquery-ui.min.js"></script>
-        <script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.1.0/css/font-awesome.min.css" />     
+        <link rel="stylesheet" type="text/css" href="/css/service.css" />
+        <link rel="shortcut icon" href="/images/scrissons.ico" />
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script async src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 
     </head>
     <body>
         <div id="background" class="background">
             <?php
-            $images = Slider::model()->findAll();
-            foreach ($images as $image)
+            $images_slider = Slider::model()->findAll();
+            foreach ($images_slider as $image)
             {
                 echo '<img class="bgimage" src="'.Yii::app()->getBaseUrl().'/images/slider/'.$image->image.'" title="'.$image->comment.'" alt="background"/>';
             }
@@ -39,7 +32,7 @@
         <div id="wrapper-panel"> 
             <div class="top-holder">
                 <div id="logo">
-                    <a href="<?= Yii::app()->homeUrl ?>"><img src="images/logo.png" alt=""></a>
+                    <a title="Салон Валерия Аксенова" href="<?= Yii::app()->homeUrl ?>"><img src="images/logo.png" alt="Салон Валерия Аксенова" title="Салон Валерия Аксенова"></a>
                 </div><!--/ logo-->        
             </div><!--/ top-holder-->
 
@@ -47,12 +40,13 @@
 
             <div id="navigation" class="navigation">
                 <ul>
-<!--                    <li><a href="main" id='main' data-speed="1000" data-easing="easeOutBack">Главная</a></li>-->
-<!--                    <li><a href="news" data-speed="1000" data-easing="easeOutBack">Новости</a></li>-->
+                    <!--                    <li><a href="main" id='main' data-speed="1000" data-easing="easeOutBack">Главная</a></li>-->
+                    <!--                    <li><a href="news" data-speed="1000" data-easing="easeOutBack">Новости</a></li>-->
                     <li><a href="service" id='service' data-speed="1000" data-easing="easeOutBack">Услуги</a></li>
-<!--                    <li><a href="gallery" data-speed="1000" data-easing="easeOutBack">Галлерея</a></li>-->
+                    <!--                    <li><a href="gallery" data-speed="1000" data-easing="easeOutBack">Галлерея</a></li>-->
                     <li><a href="shop" data-speed="1000" data-easing="easeOutBack">Магазин</a></li>
                     <li><a href="contact" data-speed="1000" data-easing="easeOutBack">Контакты</a></li>
+                    <li><a href="reserv" data-speed="1000" style="border-color: #009F52;" data-easing="easeOutBack">ONLINE ЗАПИСЬ</a></li>
 
                 </ul>
             </div>
@@ -110,10 +104,10 @@
         <!-- ***************** - END Login Form - ***************** -->
 
         <?php
-        $form = new User();
-        echo '<div class="login" style="top: 200px;">';
-        $this->renderPartial('loginDemo', array('form' => $form), false, true);
-        echo '</div>';
+//        $form = new User();
+//        echo '<div class="login" style="top: 200px;">';
+//        $this->renderPartial('loginDemo', array('form' => $form), false, true);
+//        echo '</div>';
         ?>
         <!-- ***************** - END Login Form - ***************** -->
 
@@ -142,21 +136,24 @@
             <!-- ***************** - START Content - ***************** -->
 
             <div id="cont" class="content">
-                <?php echo $content; ?>
+                <?php
+                echo $content;
+                ?>
             </div>
 
         </div><!--/ content_wrapper--> 
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script type="text/javascript" src="/js/general.js"></script>
     </body>
 </html>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#play").addClass('pause').removeClass('play');
-        intervalID = setInterval("$('#next').trigger('click')", 10000);
-
-        setTimeout(function () {
-            $("#service").click();
-        }, 1000);
-    });
+//    $(document).ready(function () {
+//    $("#play").addClass('pause').removeClass('play');
+//            intervalID = setInterval("$('#next').trigger('click')", 10000);
+//        setTimeout(function () {
+//            $("#service").click();
+//        }, 1000);
+//    });
 </script>

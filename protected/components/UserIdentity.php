@@ -6,7 +6,7 @@
      public function authenticate()
      {
          // Есть ли указанный пользователь в базе данных
-         $record=User::model()->findByAttributes(array('mail'=>$this->username));
+         $record=User::model()->findByAttributes(array('phone'=>$this->username));
          if($record===null)
              // Если нету - сохраняем в errorCode ошибку.
              $this->errorCode=self::ERROR_USERNAME_INVALID;

@@ -7,3 +7,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php
 
 Header set Access-Control-Allow-Origin "*"
+php_value date.timezone 'Etc/GMT-4'

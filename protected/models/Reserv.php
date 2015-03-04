@@ -138,6 +138,7 @@ class Reserv extends CActiveRecord {
                 $result[$i]['firstname'] = $user['name'];
                 $result[$i]['surname'] = $user['surname'];
                 $result[$i]['card'] = $user['card'];
+                $result[$i]['phone'] = $user['phone'];
 
                 $result[$i]['date'] = date("j", $result[$i]['time_start']).' '.$month[date("n", $result[$i]['time_start'])];
                 $result[$i]['start'] = date("H:i", $result[$i]['time_start']);

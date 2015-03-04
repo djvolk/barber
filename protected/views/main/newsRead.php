@@ -42,13 +42,12 @@
         </div><!--/ post-meta-->
     </div><!--/ post-item-->
 </div><!-- form -->
-<script type="text/javascript" src="js/jScrollPane.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.content_inner').jScrollPane();
-        setTimeout(function () {
-            $('.content_inner').jScrollPane();
-        }, 50);
+//        $('.content_inner').jScrollPane();
+//        setTimeout(function () {
+//            $('.content_inner').jScrollPane();
+//        }, 50);
 
         $(".back").click(function () {
             $.ajax({

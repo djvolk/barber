@@ -14,7 +14,7 @@ class BackendController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array(''),
+                'actions' => array('*'),
                 'users'   => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -25,7 +25,7 @@ class BackendController extends Controller {
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array(
                     /* новости */ 'News', 'AddNews', 'EditNews', 'DeleteNews',
-                    /* галлерея */ 'Gallery', 'GalleryTitleEdit', 'DeleteGallery',
+                    /* галлерея */ 'Gallery', 'AddGallery', 'EditGallery', 'DeleteGallery',
                     /* слайдер */ 'Slider', 'AddSlider', 'EditSlider', 'DeleteSlider',
                     /* магазин */ 'Shop', 'ShopTitleEdit', 'AddCategory', 'EditCategory', 'DeleteCategory', 'AddProduct', 'EditProduct', 'DeleteProduct',
                     /* бронь - настройки */ 'ReservSetting', 'DeleteOperation',
@@ -140,6 +140,93 @@ class BackendController extends Controller {
 
     public function actionGallery() {
 
+        $criteria = new CDbCriteria;
+        $criteria->order = 'id DESC';
+        $count = Gallery::model()->count($criteria);
+
+        $pages = new CPagination($count);
+        $pages->pageSize = 10;
+        $pages->applyLimit($criteria);
+
+        $images = Gallery::model()->findAll($criteria);
+
+        if (isset($_POST['AddGallery']))
+            $this->redirect(array('AddGallery'));
+
+        $this->render('gallery', array(
+            'images' => $images,
+            'pages'  => $pages,
+        ));
+    }
+
+    public function actionAddGallery() {
+
+        $model = new Gallery;
+
+        if (isset($_POST['Cancel']))
+            $this->redirect(array('Gallery'));
+
+        if (isset($_POST['Save']))
+        {
+            $model->comment = $_POST['Gallery']['comment'];
+            $model->alt = $_POST['Gallery']['alt'];
+
+            if (!empty($_FILES['Gallery']['name']['image']))
+            {
+                $model->image = CUploadedFile::getInstance($model, 'image');
+                $model->image->saveAs(getcwd().'/images/gallery/'.$model->image->name);
+            }
+
+            if ($model->save())
+                $this->redirect(array('Gallery'));
+        }
+        $this->render('galleryEdit', array(
+            'model' => $model,
+            'add'   => true,
+        ));
+    }
+
+    public function actionEditGallery($id) {
+
+        $model = Gallery::model()->findByPk($id);
+
+        if (isset($_POST['Cancel']))
+            $this->redirect(array('Gallery'));
+
+        if (isset($_POST['Save']))
+        {
+            $model->comment = $_POST['Gallery']['comment'];
+            $model->alt = $_POST['Gallery']['alt'];
+
+            if (!empty($_FILES['Gallery']['name']['image']))
+            {
+                $model->image = CUploadedFile::getInstance($model, 'image');
+                $model->image->saveAs(getcwd().'/images/gallery/'.$model->image->name);
+            }
+
+            if ($model->save())
+                $this->redirect(array('Gallery'));
+        }
+        $this->render('galleryEdit', array(
+            'model' => $model,
+            'edit'  => true,
+        ));
+    }
+
+    public function actionDeleteGallery($id) {
+        $model = Gallery::model()->findByPk($id);
+        if (!empty($model->image))
+        {
+            $filename = getcwd().'/images/gallery/'.$model->image;
+            if (file_exists($filename))
+                unlink($filename);
+        }
+        $model->delete();
+        $this->redirect(array('Gallery'));
+    } 
+    
+    public function actionGalleryOLD() {
+
         if (isset($_POST['Refresh']))
         {
             $count = $_POST['uploader_count'];
@@ -191,7 +278,7 @@ class BackendController extends Controller {
         ));
     }
 
-    public function actionDeleteGallery($id) {
+    public function actionDeleteGalleryOLD($id) {
         $model = Gallery::model()->findByPk($id);
         $filename = getcwd().'/images/gallery/photo/'.$model->image;
         if (file_exists($filename))
@@ -200,7 +287,7 @@ class BackendController extends Controller {
         $this->redirect(array('Gallery'));
     }
 
-    public function actionGalleryTitleEdit() {
+    public function actionGalleryTitleEditOLD() {
 
         if (isset($_POST['Save']))
         {
@@ -714,10 +801,10 @@ class BackendController extends Controller {
 
         echo '<div class="panel-body">';
         echo '<div class="form-group">';
-        echo CHtml::link('<h4>'.$item['surname'].' '.$item['firstname'], array('backend/UserAdmin', 'id' => $item['user_id']), array('style' => ''));
+        echo CHtml::link('<h4>'.$item['phone'], array('backend/UserAdmin', 'id' => $item['user_id']), array('style' => ''));
         if (!empty($item['card']))
             echo '<i class="fa fa-fw fa-credit-card fa-lg" style="margin-left:30px;"></i>';
-        echo '<span style="float:right;">'.$item['phone'].'</span></h4>';
+        echo '<span style="float:right;">'.$item['surname'].' '.$item['firstname'].'</span></h4>';
 
         echo '<h4>'.$item['name'].'</h4>';
         echo 'Время: <strong>'.$item['start'].' - '.$item['end'].'</strong><br>';

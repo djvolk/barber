@@ -1,9 +1,9 @@
-<head>
-    <title><?php echo 'Услуги - '.Yii::app()->name; ?></title>
-    <meta name="keywords" content="<?php echo 'Услуги - '.Yii::app()->name; ?>"/>
-    <meta name="description" content="<?php echo 'Услуги - '.Yii::app()->name; ?>"/>  
-    <link rel="stylesheet" type="text/css" href="/css/service.css" />
-</head>    
+<title><?php echo 'Услуги - '.Yii::app()->name; ?></title>
+<meta name="keywords" content="<?php echo 'Услуги - '.Yii::app()->name; ?>"/>
+<meta name="description" content="<?php echo 'Услуги - '.Yii::app()->name; ?>"/>  
+
+<link rel="stylesheet" href="/js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>       
 
 <div class="home_container">
     <h1>УСЛУГИ CАЛОНА ВАЛЕРИЯ АКСЕНОВА</h1>	
@@ -20,8 +20,17 @@
     
         <div class="clear"></div>
         <div class="content-divider"></div>-->
+    <div class="one_third">
+        <img width="180" src="/images/master.jpg" alt="Валерий Аксенов" />
+    </div>
 
+    <div class="one_third" style="width:360px;">
+        <div class="text-center">
+            <h2 style="font-size: 2.5em;">ОБО МНЕ</h2>
+        </div>
+    </div>
 
+    <div class="clear" style="margin-bottom: 20px;"></div>
     <div class="box text-center">
         <h2 style="font-size: 2.5em;">МОИ УСЛУГИ</h2>
     </div>
@@ -33,36 +42,29 @@
     <div class="text-center">
         <h2 style="font-size: 2.5em;">ГАЛЛЕРЕЯ МОИХ РАБОТ</h2>
     </div>
-    <div class="gl_col_3" style="margin-top: 40px;">
+    <div class="gl_col_3" id="gallery" style="margin-top: 40px;">
         <?php
         if (isset($images))
             foreach ($images as $image)
             {
                 ?>
-                <div class="well">
-                    <p><a class="zoomer"  href="/images/gallery/photo/<?= $image['image'] ?>" title="<?= $image['title'] ?>"><img src="/images/gallery/photo/<?= $image['image'] ?>" height="100" /></a></p>                    
-                </div>
+                <a class="fancybox" rel="gallery1" href="/images/gallery/<?= $image['image'] ?>" title="<?= strip_tags($image['comment']) ?>">
+                    <img src="/images/gallery/<?= $image['image'] ?>" alt="<?= $image['alt'] ?>"  height="100" />
+                </a>
             <?php } ?>	
     </div>
     <div class="clear" style="margin-bottom: 80px;"></div>
-
 
     <div class="text-center">
         <h2 style="font-size: 2.5em;">ОТЗЫВЫ МОИХ КЛИЕНТОВ</h2>
     </div>
     <?= $reviews->text ?>
 
-
-
 </div><!--/ content_inner-->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.content_inner').jScrollPane();
-        setTimeout(function () {
-            $('.content_inner').jScrollPane();
-        }, 50);
-
-        jQuery('.zoomer').fancybox({
+        $('.content_wrapper').height(2000);
+        $('.fancybox').fancybox({
             'overlayShow': true,
             'transitionIn': 'elastic',
             'transitionOut': 'elastic'
@@ -80,31 +82,16 @@
             return false;
         });
 
-        $("#haircut").click(function () {
+        $("#online").click(function () {
             $.ajax({
                 type: "POST",
                 url: 'reserv',
                 cache: false,
-                data: {'type': $(this).attr('id')},
                 success: function (html) {
                     jQuery('#cont').html(html);
                 }
             });
             return false;
         });
-
-        $("#color").click(function () {
-            $.ajax({
-                type: "POST",
-                url: 'reserv',
-                cache: false,
-                data: {'type': $(this).attr('id')},
-                success: function (html) {
-                    jQuery('#cont').html(html);
-                }
-            });
-            return false;
-        });
-
     });
 </script>

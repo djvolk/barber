@@ -15,39 +15,48 @@
         </div>
         <div class="panel-body">
             <small style="float: right;"><em>Дата регистрации: <?php echo $model->date; ?></em></small>
-            <div class="col-lg-6" style="margin-top: 20px;">
-                <i class="fa fa-user"></i> Имя:
+            <div class="row">
+                <div class="col-lg-6" style="margin-top: 20px;">
+                    <i class="fa fa-user"></i> Имя:
+                </div>
+                <div class="col-lg-6" style="margin-top: 20px;">
+                    <?php echo $model->name; ?>
+                </div>  
             </div>
-            <div class="col-lg-6" style="margin-top: 20px;">
-                <?php echo $model->name; ?>
-            </div>  
-            
-            <div class="col-lg-6" style="margin-top: 10px;">
-                <i class="fa fa-user"></i> Фамилия:
-            </div>
-            <div class="col-lg-6" style="margin-top: 10px;">
-                <?php echo $model->surname; ?>
-            </div>
-            
-            <div class="col-lg-6" style="margin-top: 10px;">
-                <i class="fa fa-envelope"></i> E-mail:
-            </div>
-            <div class="col-lg-6" style="margin-top: 10px;">
-                <?php echo $model->mail; ?>
-            </div>
-            
-            <div class="col-lg-6" style="margin-top: 10px;">
-                <i class="fa fa-phone"></i> Телефон:
-            </div>
-            <div class="col-lg-6" style="margin-top: 10px;">
-                <?php echo $model->phone; ?>
+            <div class="row">
+                <div class="col-lg-6" style="margin-top: 10px;">
+                    <i class="fa fa-user"></i> Фамилия:
+                </div>
+                <div class="col-lg-6" style="margin-top: 10px;">
+                    <?php echo $model->surname; ?>
+                </div>
             </div>
 
-            <div class="col-lg-6" style="margin-top: 10px;">
-                <i class="fa fa-credit-card"></i> Карта:
+            <div class="row">
+                <div class="col-lg-6" style="margin-top: 10px;">
+                    <i class="fa fa-envelope"></i> E-mail:
+                </div>
+                <div class="col-lg-6" style="margin-top: 10px;">
+                    <?php echo $model->mail; ?>
+                </div>
             </div>
-            <div class="col-lg-6" style="margin-top: 10px;">
-                <?php echo $model->card; ?>
+
+            <div class="row">
+                <div class="col-lg-6" style="margin-top: 10px;">
+                    <i class="fa fa-phone"></i> Телефон:
+                </div>
+                <div class="col-lg-6" style="margin-top: 10px;">
+                    <?php echo $model->phone; ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6" style="margin-top: 10px;">
+                    <i class="fa fa-credit-card"></i> Карта:
+                </div>
+                <div class="col-lg-6" style="margin-top: 10px;">
+                    <?php echo $model->card; ?>
+                </div>
             </div>
         </div>
     </div>

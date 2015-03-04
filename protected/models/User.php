@@ -30,18 +30,17 @@ class User extends CActiveRecord {
 
     public function rules() {
         return array(
-            array('mail', 'required', 'message' => 'Пожалуйста, введите email.'),
-            array('password', 'required', 'message' => 'Пожалуйста, введите пароль.'),
-            array('phone', 'required', 'message' => 'Пожалуйста, введите телефон.', 'on' => 'registration'),
-            array('name', 'required', 'message' => 'Пожалуйста, введите Имя.', 'on' => 'registration'),
-            array('surname', 'required', 'message' => 'Пожалуйста, введите Фамилию.', 'on' => 'registration'),
+            array('phone', 'required', 'message' => 'Пожалуйста, введите email.'),
+            array('password', 'required', 'message' => 'Пожалуйста, введите пароль.', 'on' => 'registration'),
+            array('phone', 'phoneValidate', 'on' => 'registration'),
+            //array('phone', 'required', 'message' => 'Пожалуйста, введите телефон.', 'on' => 'registration'),
+            //array('name', 'required', 'message' => 'Пожалуйста, введите Имя.', 'on' => 'registration'),
+            //array('surname', 'required', 'message' => 'Пожалуйста, введите Фамилию.', 'on' => 'registration'),
             array('mail', 'match', 'pattern' => '#^[0-9a-z]+[-\._0-9a-z]*@[0-9a-z]+[-\._^0-9a-z]*[0-9a-z]+[\.]{1}[a-z]{2,6}$#i', 'message' => 'Email недопустимого формата.'),
             array('mail', 'unique', 'caseSensitive' => true, 'allowEmpty' => true, 'message' => 'Email уже зарегистрирован.', 'on' => 'registration'),
             array('password', 'length', 'min' => 6, 'tooShort' => 'Пароль слишком короткий.'),
             array('card', 'cardValidate'),
             array('password', 'authenticate', 'on' => 'login'),
-            array('phone', 'unique', 'caseSensitive' => true, 'allowEmpty' => true, 'message' => 'Номер уже зарегистрирован.', 'on' => 'registration'),
-            array('phone', 'length', 'min' => 12, 'max' => 12, 'tooShort' => 'Номер введен неверно.', 'tooLong' => 'Номер введен неверно.', 'on' => 'registration'),
             array('id, mail, password, date, phone, code, name, surname, card, status, role', 'safe', 'on' => 'search'),
         );
     }
@@ -82,6 +81,27 @@ class User extends CActiveRecord {
         }
     }
 
+    public function phoneValidate() {
+
+        if (!empty($this->phone))
+        {
+            $query = Yii::app()->db->createCommand()
+                    ->select('*')
+                    ->from('tbl_user')
+                    ->where('phone = "'.$this->phone.'"')
+                    ->queryRow();
+
+            if (isset($query))
+            {
+                if ($query['role'] == 'admin' || $query['role'] == 'user')
+                {
+                    $this->addError('phone', 'Номер уже зарегистрирован');
+                }
+            }
+        } else
+            $this->addError('phone', 'Введите номер телефона');
+    }
+
     public function authenticate($attribute, $params) {
         // Проверяем были ли ошибки в других правилах валидации.
         // если были - нет смысла выполнять проверку
@@ -89,7 +109,7 @@ class User extends CActiveRecord {
         {
             // Создаем экземпляр класса UserIdentity
             // и передаем в его конструктор введенный пользователем логин и пароль (с формы)
-            $identity = new UserIdentity($this->mail, $this->password);
+            $identity = new UserIdentity($this->phone, $this->password);
             // Выполняем метод authenticate (о котором мы с вами говорили пару абзацев назад)
             // Он у нас проверяет существует ли такой пользователь и возвращает ошибку (если она есть)
             // в $identity->errorCode
@@ -107,14 +127,14 @@ class User extends CActiveRecord {
                     }
                 case UserIdentity::ERROR_USERNAME_INVALID: {
                         // Если логин был указан наверно - создаем ошибку
-                        $this->addError('mail', 'Не верно введен mail или пароль.');
+                        $this->addError('phone', 'Не верно введен телефон или пароль.');
                         $this->addError('password', 'Не верно введен mail или пароль.');
                         break;
                     }
                 case UserIdentity::ERROR_PASSWORD_INVALID: {
                         // Если пароль был указан наверно - создаем ошибку
-                        $this->addError('mail', 'Не верно введен mail или пароль.');
-                        $this->addError('password', 'Не верно введен mail или пароль.');
+                        $this->addError('phone', 'Не верно введен телефон или пароль.');
+                        $this->addError('password', 'Не верно введен телефон или пароль.');
                         break;
                     }
             }
@@ -122,7 +142,20 @@ class User extends CActiveRecord {
     }
 
     public function getFullName() {
-        return $this->surname." ".$this->name;
+        return $this->phone.' ('.$this->surname.' '.$this->name.')';
+    }
+
+    public function getRole($phone) {
+        $query = Yii::app()->db->createCommand()
+                ->select('*')
+                ->from('tbl_user')
+                ->where('phone = "'.$phone.'"')
+                ->queryRow();
+
+        if (!isset($query))
+            return 'empty';
+        else
+            return $query['role'];
     }
 
     public function generate_code($number) {

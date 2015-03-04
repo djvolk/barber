@@ -17,15 +17,19 @@ if (isset($users))
     foreach ($users as $user)
     {
         if ($user->role == 'admin')
-          $role = '<span class="badge" style="color:#FFD700;">Администратор</span>';
+            $role = '<span class="badge" style="color:#FFD700;">Администратор</span>';
         elseif ($user->role == 'user')
-            $role = '<span class="badge">Пользователь</span>';
-          
-          
+            $role = '<span class="badge" style="color:#82FA58;">Пользователь</span>';
+        elseif ($user->role == 'guest')
+            $role = '<span class="badge">Незарегистрирован</span>';
+
+
         echo '<a class="list-group-item" href="/backend/UserAdmin?id='.$user->id.'">';
-        echo $user->surname.'  '.$user->name
-        .$role
-        .'<span class="badge">'.$user->phone.'</span>';
+        if (!empty($user->surname) or ! empty($user->name))
+            echo $user->surname.'  '.$user->name;
+        else
+            echo $user->phone;
+        echo $role.'<span class="badge">'.$user->phone.'</span>';
         echo '</a>';
     }
 ?>

@@ -2,7 +2,7 @@
     <label style="font-size: 16px; width: 200px; text-align: middle;">
         <?php
         $user = User::model()->findByPk(Yii::app()->user->id);
-        echo 'Вы зашли как: '.$user['name'].' '.$user['surname'];
+        echo 'Вы зашли как: '.$user['phone'];
         ?></label>
 </div>
 <div>

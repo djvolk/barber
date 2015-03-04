@@ -1,7 +1,8 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/css/datepicker.back.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script> 
     <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker.ru.js"></script>
     <?php $this->pageTitle = 'Управление записями'; ?>  
 </head>
 
@@ -36,7 +37,9 @@ $form = $this->beginWidget('CActiveForm', array(
                     {
                         echo '<a href="#" class="list-group-item list-group-item-success info" id="'.$item['id'].'">';
                         echo '<h4 class="list-group-item-heading">'.$item['date'].' '.$item['time'].'</h4>';
-                        echo ' <span class="badge" style="float:right;">'.$item['surname'].' '.$item['firstname'].'</span>';
+                        echo ' <span class="badge" style="float:right;">'.$item['phone'].'</span>';
+                        if (!empty($item['surname']) or !empty($item['firstname']))
+                            echo ' <span class="badge" style="margin-right:50px;">'.$item['surname'].' '.$item['firstname'].'</span>';                               
                         echo '<p class="list-group-item-text">'.$item['name'].'</p>';
                         //echo '<p class="list-group-item-text">Длительность: '.$item['duration'].' мин. Цена: '.$item['price'].' руб.</p>';
                         echo '</a>';

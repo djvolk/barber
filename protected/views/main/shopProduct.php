@@ -41,10 +41,10 @@
 </div><!--/ content_inner-->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.content_inner').jScrollPane();
-        setTimeout(function () {
-            $('.content_inner').jScrollPane();
-        }, 50);
+//        $('.content_inner').jScrollPane();
+//        setTimeout(function () {
+//            $('.content_inner').jScrollPane();
+//        }, 50);
 
         jQuery('.zoomer').fancybox({
             'overlayShow': true,

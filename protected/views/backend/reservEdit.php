@@ -1,7 +1,8 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/css/datepicker.back.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script> 
     <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker.ru.js"></script>
     <?php $this->pageTitle = 'Создать или редактировать запись'; ?>  
 </head>
 
