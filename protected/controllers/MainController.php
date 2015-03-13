@@ -365,6 +365,7 @@ class MainController extends Controller {
         {
             $form = new User();
 
+            
             if (isset($_POST['User']))
             {
                 $form->password = strip_tags($_POST['User']['password']);                                        //добавляем +
@@ -404,7 +405,6 @@ class MainController extends Controller {
                     }
                 }
 
-
                 if ($form->validate())
                 {
                     $form->code = User::model()->generate_code(6);
@@ -424,6 +424,11 @@ class MainController extends Controller {
                             'status' => 'error',
                             'html'   => $this->renderPartial('registration', array('form' => $form), true)));
                     }
+                } else
+                {                       
+                        echo CJSON::encode(array(
+                            'status' => 'error',
+                            'html'   => $this->renderPartial('registration', array('form' => $form), true)));                    
                 }
             }
         }

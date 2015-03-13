@@ -1,6 +1,6 @@
 <title><?php echo 'Запись - '.Yii::app()->name; ?></title>
-<meta name="keywords" content="<?php echo 'Запись - '.Yii::app()->name; ?>"/>
-<meta name="description" content="<?php echo 'Запись - '.Yii::app()->name; ?>"/> 
+<meta name="keywords" content="<?php echo 'Бронирование, Запись - '.Yii::app()->name; ?>"/>
+<meta name="description" content="<?php echo 'ONLINE Запись - '.Yii::app()->name; ?>"/> 
 
 <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="/js/bootstrap-datepicker.ru.js"></script>
@@ -147,7 +147,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.content_wrapper').height(1200);
-
+        $("body").animate({"scrollTop": 0}, 300);
 //---------------------OPERATION----------------------//
 
         $(".operationButton").click(function () {
@@ -159,7 +159,11 @@
                 $('#phone').click();
                 $('#phoneInput').focus().setCursorPosition(2);
             } else
+            {
                 $('#operation').click();
+                $('#confirm').fadeIn(300);
+                $('#confirm_span').fadeIn(300);
+            }
             $("body").animate({"scrollTop": 0}, 300);
             return false;
         });
@@ -218,7 +222,13 @@
             {
                 $('#phone').click();
                 $('#phoneInput').focus().setCursorPosition(2);
-            } else {
+            }
+            else if ($('#operationLabel').html() == '')
+            {
+                $('#operation').click();
+            }
+            else
+            {
                 $('#time').click();
                 $('#confirm').fadeIn(300);
                 $('#confirm_span').fadeIn(300);
@@ -259,7 +269,13 @@
         $('#phoneButton').click(function () {
             $('#phoneLabel').html($('#phoneInput').val());
             if ($('#timeLabel').html() == '')
+            {
                 $('#time').click();
+            }
+            else if ($('#operationLabel').html() == '')
+            {
+                $('#operation').click();
+            }
             else
             {
                 $('#phone').click();

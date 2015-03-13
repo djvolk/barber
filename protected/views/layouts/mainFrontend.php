@@ -5,7 +5,7 @@
 
         <title><?php echo Yii::app()->name; ?></title>
         <meta name="keywords" content="<?php echo Yii::app()->name.' Стрижка, Окраска, Салон красоты, Парикмахерская, Ножницы, Стричься, Прическа'; ?>"/>
-        <meta name="description" content="<?php echo Yii::app()->name.' Онлайн запись в салон. Лучшие новые модные срижки.'; ?>"/>  
+        <meta name="description" content="<?php echo Yii::app()->name.'Мастер Валерий Аксенов. Онлайн запись в салон. Лучшие новые модные срижки. г. Самара, тц. Караван, тел. +79272994406'; ?>"/>  
 
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
         <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.1.0/css/font-awesome.min.css" />     
